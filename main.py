@@ -3,14 +3,27 @@ import random
 import re
 
 def get_days_from_today(date: str) -> int:
+    
     today = datetime.today()
-    date = datetime.strptime(date, "%Y-%m-%d")
-    return (today - date).days
+    try:
+        date = datetime.strptime(date, "%Y-%m-%d")
+        return (today - date).days
+    except ValueError:
+        return "Invalid date format"
+    except Exception as e:
+        return f"An unexpected error occurred: {e}"
 
 def get_numbers_ticket(min: int, max: int, quantity: int) -> list[int]:
-    return random.sample(range(min, max), quantity)
+    if min < 1:
+        raise ValueError("Minimum value must be greater than 0")
+    if max > 1000:
+        raise ValueError("Maximum value must be greater than 0")
+    if quantity < min or quantity > max:
+        raise ValueError("Quantity must be greater than minimum and less than maximum")
+    
+    return sorted(random.sample(range(min, max), quantity))
 
-def normalise_phone_number(phone: str) -> str:
+def normalize_phone(phone: str) -> str:
     if phone.startswith("+"):
         phone = re.sub(r'[\D+]', '', phone)
     else:
@@ -40,12 +53,12 @@ def get_upcoming_birthdays(users: list[dict[str, str]]) -> dict[str, str]:
             else user_birthday.replace(year=today.year + 1)
         
         if (
-            today - closest_birthday <= timedelta(days=7)
+            closest_birthday - today <= timedelta(days=7)
         ):
             if closest_birthday.weekday() >= 5:
                 closest_birthday += timedelta(days=closest_birthday.weekday() - 4)
             upcoming_birthdays.append((user["name"], closest_birthday.strftime("%Y.%m.%d")))
-    return {name: birthday for name, birthday in upcoming_birthdays}
+    return [{"name":name, "congratulation_date": birthday} for name, birthday in upcoming_birthdays]
         
         
         

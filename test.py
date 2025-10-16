@@ -1,4 +1,4 @@
-from main import get_days_from_today, get_numbers_ticket, normalise_phone_number, get_upcoming_birthdays
+from main import get_days_from_today, get_numbers_ticket, normalize_phone, get_upcoming_birthdays
 
 print(get_days_from_today("2025-01-01")) # should be 286 if today is 2025-10-14
 print(get_days_from_today("2021-10-09")) # should be 1466 if today is 2025-10-14
@@ -17,11 +17,12 @@ raw_numbers = [
 ]
 
 for raw_number in raw_numbers:
-    print(normalise_phone_number(raw_number))
+    print(normalize_phone(raw_number))
     
 users = [
     {"name": "John Doe", "birthday": "1985.10.15"},
-    {"name": "Jane Smith", "birthday": "1990.10.18"}
+    {"name": "Jane Smith", "birthday": "1990.10.18"},
+    {"name": "Jim Beam", "birthday": "1995.10.28"}
 ]
 
 print(get_upcoming_birthdays(users))
