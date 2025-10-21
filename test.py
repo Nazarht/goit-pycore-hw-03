@@ -20,9 +20,18 @@ for raw_number in raw_numbers:
     print(normalize_phone(raw_number))
     
 users = [
-    {"name": "John Doe", "birthday": "1985.10.15"},
-    {"name": "Jane Smith", "birthday": "1990.10.18"},
-    {"name": "Jim Beam", "birthday": "1995.10.28"}
+   {'name': 'Before Before Yesterday', 'birthday': '1986.10.18'},
+   {'name': 'Before Yesterday', 'birthday': '2007.10.19'},
+   {'name': 'Yesterday', 'birthday': '1976.10.20'},
+   {'name': 'Today', 'birthday': '1950.10.21'},
+   {'name': 'Tomorrow', 'birthday': '1961.10.22'},
+   {'name': 'After Tomorrow', 'birthday': '1973.10.23'},
+   {'name': 'After After Tomorrow', 'birthday': '1967.10.24'},
+   {'name': 'In Four Days', 'birthday': '1970.10.25'},
+   {'name': 'In Five Days', 'birthday': '1959.10.26'},
+   {'name': 'In Six Days', 'birthday': '1954.10.27'},
+   {'name': 'In Seven Days', 'birthday': '1979.10.28'},
+   {'name': 'In Eight Days', 'birthday': '1984.10.29'},
 ]
 
 print(get_upcoming_birthdays(users))

@@ -15,12 +15,11 @@ def get_days_from_today(date: str) -> int:
 
 def get_numbers_ticket(min: int, max: int, quantity: int) -> list[int]:
     if min < 1:
-        raise ValueError("Minimum value must be greater than 0")
+        return []
     if max > 1000:
-        raise ValueError("Maximum value must be greater than 0")
-    if quantity < min or quantity > max:
-        raise ValueError("Quantity must be greater than minimum and less than maximum")
-    
+        return []
+    if quantity > max - min:
+        return []
     return sorted(random.sample(range(min, max), quantity))
 
 def normalize_phone(phone: str) -> str:
@@ -46,17 +45,16 @@ def get_upcoming_birthdays(users: list[dict[str, str]]) -> dict[str, str]:
         
         user_birthday = datetime.strptime(birthday, "%Y.%m.%d")
         
-        #adjust in case if birthday close to the current year
         closest_birthday = \
             user_birthday.replace(year=today.year) \
-            if today - user_birthday.replace(year=today.year) <= timedelta(days=7)\
+            if today - user_birthday.replace(year=today.year) <= timedelta(days=7) and user_birthday.replace(year=today.year) > today\
             else user_birthday.replace(year=today.year + 1)
         
         if (
             closest_birthday - today <= timedelta(days=7)
         ):
             if closest_birthday.weekday() >= 5:
-                closest_birthday += timedelta(days=closest_birthday.weekday() - 4)
+                closest_birthday += timedelta(days=(2 if closest_birthday.weekday() == 5 else 1))
             upcoming_birthdays.append((user["name"], closest_birthday.strftime("%Y.%m.%d")))
     return [{"name":name, "congratulation_date": birthday} for name, birthday in upcoming_birthdays]
         
